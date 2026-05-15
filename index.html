@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Ocean - Price List</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'fredoka': ['Fredoka', 'sans-serif'],
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        ocean: {
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Title Font specific */
+        .title-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .price-pill {
+            background: #5b8bc4;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .price-pill:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background: #4a7ab5;
+        }
+
+        /* Custom Input Styling */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Bubbles Animation */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: float 8s infinite ease-in;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #ef4444;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 pb-12">
+
+    <!-- Bubble Background Elements -->
+    <div class="bubble" style="left: 10%; width: 40px; height: 40px; animation-duration: 7s;"></div>
+    <div class="bubble" style="left: 30%; width: 20px; height: 20px; animation-duration: 5s; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 60%; width: 50px; height: 50px; animation-duration: 9s; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 80%; width: 30px; height: 30px; animation-duration: 6s; animation-delay: 3s;"></div>
+    <div class="bubble" style="left: 50%; width: 25px; height: 25px; animation-duration: 8s; animation-delay: 4s;"></div>
+
+    <!-- Main Container -->
+    <div class="max-w-4xl mx-auto px-4 pt-10 sm:pt-16">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="title-font text-5xl md:text-6xl font-bold text-blue-700 tracking-wider mb-2" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Kedai Ocean</h1>
+            <h2 class="title-font text-2xl md:text-3xl font-medium text-blue-600 tracking-widest uppercase">Price List</h2>
+            <p class="mt-4 text-blue-800 font-semibold text-lg">𓇼 ⋆.˚ 𓆉 𝑷𝑹𝑰𝑪𝑬 𝑳𝑰𝑺𝑻 𝑹𝑶𝑩𝑼𝑿°𓇼⋆🫧</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Left Column: Robux Via Login -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-gamepad text-blue-500"></i> ROBUX VIA LOGIN
+                </h3>
+                
+                <div class="grid grid-cols-1 gap-3" id="login-prices">
+                    <!-- Harga di-generate via JS untuk mempermudah, tapi kita hardcode sesuai prompt -->
+                </div>
+            </div>
+
+            <!-- Right Column: Premium & Gamepass (if any) & Notes -->
+            <div class="flex flex-col gap-8">
+                
+                <!-- Robux Premium -->
+                <div class="glass-card rounded-3xl p-6 md:p-8">
+                    <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-crown text-yellow-500"></i> ROBUX PREMIUM
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 gap-3" id="premium-prices">
+                        <!-- Harga premium di-generate via JS -->
+                    </div>
+                </div>
+
+                <!-- Notes Section -->
+                <div class="bg-blue-600/80 backdrop-blur-md rounded-3xl p-6 text-white text-sm shadow-lg border border-blue-400">
+                    <h4 class="font-bold mb-3 text-blue-100 flex items-center gap-2"><i class="fa-solid fa-circle-info"></i> NOTE</h4>
+                    <ul class="list-disc pl-4 space-y-2 opacity-90 leading-relaxed">
+                        <li>Robux premium hanya bisa dibeli 1x/bulan</li>
+                        <li>Benefit robux premium: 10% bonus robux saat membeli vilog reguler, serta item, boost, level, khusus premium</li>
+                        <li>Jika ada jumlah robux lain yang diinginkan tapi tidak tertera di atas bisa chat admin</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Form Pemesanan -->
+        <div class="mt-12 glass-card rounded-3xl p-6 md:p-10">
+            <div class="text-center mb-8">
+                <h3 class="title-font text-2xl font-bold text-blue-900">📝 FORMAT ORDER VILOG / PREMIUM</h3>
+                <p class="text-blue-700 mt-2">Isi data di bawah ini untuk mengirim format pesanan ke Telegram kami.</p>
+            </div>
+
+            <form id="orderForm" class="space-y-5 max-w-2xl mx-auto" onsubmit="event.preventDefault(); sendToTelegram();">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">ID Telegram</label>
+                        <input type="text" id="id_tele" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="@username_kamu" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Username Roblox</label>
+                        <input type="text" id="user_roblox" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Username Roblox" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Password Roblox</label>
+                        <input type="text" id="pass_roblox" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Password akun Roblox" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Jumlah Robux</label>
+                        <input type="text" id="jumlah_robux" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Contoh: 160R / 450R Premium" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Kirim 2 Kode Back Up</label>
+                    <input type="text" id="kode_backup" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Masukkan 2 kode backup (pisahkan dengan koma)" required>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-full px-6 py-4 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex justify-center items-center gap-3">
+                        <i class="fa-brands fa-telegram text-2xl"></i> KIRIM KE TELEGRAM @Oceeeeannnnn
+                    </button>
+                    <p class="text-center text-xs text-blue-800 mt-3 font-semibold">Payment: All E-Wallet, Bank, QRIS</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Toast Message -->
+    <div id="toast">Harap isi semua kolom pesanan!</div>
+
+    <script>
+        // SVG Icon Robux
+        const robuxIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block">
+            <path d="M12 2L22.3923 8V20L12 22L1.6077 16V4L12 2Z" fill="#FDE047" stroke="#CA8A04" stroke-width="2"/>
+            <rect x="9" y="8" width="6" height="6" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1"/>
+        </svg>`;
+
+        // Data Harga
+        const pricesLogin = [
+            { amount: "80R", price: "16K" },
+            { amount: "160R", price: "32K" },
+            { amount: "240R", price: "48K" },
+            { amount: "320R", price: "62K" },
+            { amount: "500R", price: "75K" },
+            { amount: "1000R", price: "148K" },
+            { amount: "1500R", price: "220K" },
+            { amount: "2000R", price: "295K" },
+            { amount: "2500R", price: "360K" },
+            { amount: "3000R", price: "440K" },
+            { amount: "4000R", price: "580K" },
+            { amount: "5000R", price: "720K" }
+        ];
+
+        const pricesPremium = [
+            { amount: "450R + Premium", price: "75K" },
+            { amount: "1000R + Premium", price: "150K" },
+            { amount: "2000R + Premium", price: "300K" }
+        ];
+
+        // Fungsi Render Harga
+        function renderPrices(data, containerId) {
+            const container = document.getElementById(containerId);
+            data.forEach(item => {
+                const pill = document.createElement('div');
+                pill.className = 'price-pill rounded-full px-5 py-3 flex justify-between items-center cursor-default';
+                pill.innerHTML = `
+                    <div class="flex items-center gap-3 font-bold text-[15px] tracking-wide">
+                        ${robuxIcon}
+                        <span>${item.amount}</span>
+                    </div>
+                    <div class="font-extrabold text-white text-[15px] bg-blue-800/40 px-3 py-1 rounded-full border border-blue-400/30">
+                        ${item.price}
+                    </div>
+                `;
+                container.appendChild(pill);
+            });
+        }
+
+        renderPrices(pricesLogin, 'login-prices');
+        renderPrices(pricesPremium, 'premium-prices');
+
+        // Fungsi Show Toast
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Fungsi Kirim ke Telegram
+        function sendToTelegram() {
+            const idTele = document.getElementById('id_tele').value.trim();
+            const userRoblox = document.getElementById('user_roblox').value.trim();
+            const passRoblox = document.getElementById('pass_roblox').value.trim();
+            const jumlahRobux = document.getElementById('jumlah_robux').value.trim();
+            const kodeBackup = document.getElementById('kode_backup').value.trim();
+
+            if (!idTele || !userRoblox || !passRoblox || !jumlahRobux || !kodeBackup) {
+                showToast("Harap isi semua data pada format!");
+                return;
+            }
+
+            const formatText = `FORMAT VILOG/PREMIUM\n\nId Telegram: ${idTele}\nUsername Roblox: ${userRoblox}\nPassword Roblox: ${passRoblox}\nJumlah Robux: ${jumlahRobux}\nKirim 2 Kode Back Up: ${kodeBackup}`;
+
+            // URL Encode text
+            const encodedText = encodeURIComponent(formatText);
+            
+            // Buka link Telegram
+            const telegramURL = `https://t.me/Oceeeeannnnn?text=${encodedText}`;
+            window.open(telegramURL, '_blank');
+        }
+    </script>
+</body>
+</html>
