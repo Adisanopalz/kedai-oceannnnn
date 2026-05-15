@@ -83,10 +83,46 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
 
+        /* Animasi Muncul saat Scroll (Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Animasi Poster Melayang */
+        @keyframes floatImg {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float-img {
+            animation: floatImg 4s ease-in-out infinite;
+        }
+
+        /* Animasi Teks Berkilau */
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        .text-shine {
+            background: linear-gradient(to right, #1d4ed8 20%, #60a5fa 40%, #60a5fa 60%, #1d4ed8 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+
         /* Bubbles Animation */
         .bubble {
             position: absolute;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             bottom: -50px;
             animation: float 8s infinite ease-in;
@@ -146,8 +182,8 @@
         <!-- Hero Section with Poster -->
         <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-14">
             <!-- Text Content -->
-            <div class="text-center md:text-left flex-1 order-2 md:order-1">
-                <h1 class="title-font text-5xl md:text-6xl font-bold text-blue-700 tracking-wider mb-2" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Kedai Ocean</h1>
+            <div class="text-center md:text-left flex-1 order-2 md:order-1 reveal">
+                <h1 class="title-font text-5xl md:text-6xl font-bold tracking-wider mb-2 text-shine" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.4);">Kedai Ocean</h1>
                 <h2 class="title-font text-2xl md:text-3xl font-medium text-blue-600 tracking-widest uppercase">Price List</h2>
                 <p class="mt-4 text-blue-800 font-semibold text-lg md:text-xl">𓇼 ⋆.˚ 𓆉 𝑷𝑹𝑰𝑪𝑬 𝑳𝑰𝑺𝑻 𝑹𝑶𝑩𝑼𝑿°𓇼⋆🫧</p>
                 <div class="mt-8 hidden md:block">
@@ -158,18 +194,18 @@
             </div>
             
             <!-- Poster Image -->
-            <div class="flex-1 w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto relative group order-1 md:order-2">
+            <div class="flex-1 w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto relative group order-1 md:order-2 reveal" style="transition-delay: 200ms;">
                 <!-- Glowing effect di belakang poster -->
-                <div class="absolute -inset-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition duration-500"></div>
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition duration-500 animate-pulse"></div>
                 <!-- Ganti src dengan nama file gambar poster kamu -->
-                <img src="https://i.imgur.com/5NQKzBc.jpeg" alt="Poster Kedai Ocean" class="relative rounded-3xl shadow-2xl w-full object-cover border-4 border-white/60 transform transition duration-500 hover:scale-[1.02]" onerror="this.src='https://placehold.co/600x600/bfdbfe/1d4ed8?text=Poster+Kedai+Ocean'">
+                <img src="https://i.imgur.com/5NQKzBc.jpeg" alt="Poster Kedai Ocean" class="relative rounded-3xl shadow-2xl w-full object-cover border-4 border-white/60 animate-float-img" onerror="this.src='https://placehold.co/600x600/bfdbfe/1d4ed8?text=Poster+Kedai+Ocean'">
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             <!-- Left Column: Robux Via Login -->
-            <div class="glass-card rounded-3xl p-6 md:p-8">
+            <div class="glass-card rounded-3xl p-6 md:p-8 reveal">
                 <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-gamepad text-blue-500"></i> ROBUX VIA LOGIN
                 </h3>
@@ -183,7 +219,7 @@
             <div class="flex flex-col gap-8">
                 
                 <!-- Robux Premium -->
-                <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="glass-card rounded-3xl p-6 md:p-8 reveal" style="transition-delay: 200ms;">
                     <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-crown text-yellow-500"></i> ROBUX PREMIUM
                     </h3>
@@ -194,7 +230,7 @@
                 </div>
 
                 <!-- Notes Section -->
-                <div class="bg-blue-600/80 backdrop-blur-md rounded-3xl p-6 text-white text-sm shadow-lg border border-blue-400">
+                <div class="bg-blue-600/80 backdrop-blur-md rounded-3xl p-6 text-white text-sm shadow-lg border border-blue-400 reveal" style="transition-delay: 400ms;">
                     <h4 class="font-bold mb-3 text-blue-100 flex items-center gap-2"><i class="fa-solid fa-circle-info"></i> NOTE</h4>
                     <ul class="list-disc pl-4 space-y-2 opacity-90 leading-relaxed">
                         <li>Robux premium hanya bisa dibeli 1x/bulan</li>
@@ -207,7 +243,7 @@
         </div>
 
         <!-- Form Pemesanan -->
-        <div id="order-section" class="mt-12 glass-card rounded-3xl p-6 md:p-10 scroll-mt-24 relative z-10">
+        <div id="order-section" class="mt-12 glass-card rounded-3xl p-6 md:p-10 scroll-mt-24 relative z-10 reveal">
             <div class="text-center mb-8">
                 <h3 class="title-font text-2xl font-bold text-blue-900">📝 FORMAT ORDER VILOG / PREMIUM</h3>
                 <p class="text-blue-700 mt-2">Isi data di bawah ini untuk mengirim format pesanan ke Telegram kami.</p>
@@ -347,6 +383,26 @@
             const telegramURL = `https://t.me/Oceeeeannnnn?text=${encodedText}`;
             window.open(telegramURL, '_blank');
         }
+
+        // --- SCRIPT ANIMASI REVEAL SAAT SCROLL ---
+        function revealOnScroll() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 50; // Jarak dari bawah layar agar animasi mulai
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        // Tambahkan event listener scroll
+        window.addEventListener("scroll", revealOnScroll);
+        
+        // Panggil fungsi sekali saat website baru direload
+        setTimeout(revealOnScroll, 100);
     </script>
 </body>
 </html>
