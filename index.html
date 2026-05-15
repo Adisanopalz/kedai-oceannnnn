@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kedai Ocean - Price List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kedai Ocean - Premium Robux Store</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Outfit for Headings, Plus Jakarta Sans for Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -16,18 +18,35 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        'fredoka': ['Fredoka', 'sans-serif'],
-                        'nunito': ['Nunito', 'sans-serif'],
+                        'heading': ['Outfit', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
-                        ocean: {
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
                         }
                     }
                 }
@@ -36,332 +55,497 @@
     </script>
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
+            background-color: #f0f8ff;
+            color: #0f172a;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Title Font specific */
-        .title-font {
-            font-family: 'Fredoka', sans-serif;
-        }
-
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        }
-
-        .price-pill {
-            background: #5b8bc4;
-            color: white;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .price-pill:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            background: #4a7ab5;
-        }
-
-        /* Custom Input Styling */
-        .glass-input {
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .glass-input:focus {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: #3b82f6;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Animasi Muncul saat Scroll (Reveal) */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Animasi Poster Melayang */
-        @keyframes floatImg {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float-img {
-            animation: floatImg 4s ease-in-out infinite;
-        }
-
-        /* Animasi Teks Berkilau */
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-        .text-shine {
-            background: linear-gradient(to right, #1d4ed8 20%, #60a5fa 40%, #60a5fa 60%, #1d4ed8 80%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 3s linear infinite;
-        }
-
-        /* Bubbles Animation */
-        .bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            bottom: -50px;
-            animation: float 8s infinite ease-in;
+        /* Ambient Animated Background (Mesh/Orbs effect) */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(180deg, #e0f2fe 0%, #f8fafc 100%);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #bae6fd; animation: blob 12s infinite alternate; }
+        .orb-2 { top: 40%; right: -20%; width: 60vw; height: 60vw; background: #e0e7ff; animation: blob 15s infinite alternate-reverse; }
+        .orb-3 { bottom: -20%; left: 20%; width: 40vw; height: 40vw; background: #cffafe; animation: blob 10s infinite alternate; }
+
+        /* Modern Glass Cards */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 40px -10px rgba(2, 132, 199, 0.1);
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-1000px) scale(1.5);
-                opacity: 0;
-            }
+        /* Sleek Form Inputs */
+        .modern-input {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modern-input:focus {
+            background: #ffffff;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15), 0 0 0 4px rgba(56, 189, 248, 0.1);
+            outline: none;
+            transform: translateY(-2px);
         }
 
-        /* Custom Toast Notification */
+        /* Product Card Item */
+        .product-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #7dd3fc;
+            box-shadow: 0 15px 30px -10px rgba(2, 132, 199, 0.15);
+        }
+
+        /* Tab Transitions */
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.4s ease forwards;
+        }
+        .tab-content.active {
+            display: grid;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Custom Toast */
         #toast {
             visibility: hidden;
-            min-width: 250px;
-            background-color: #ef4444;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 50;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-weight: bold;
+            transform: translate(-50%, 20px) scale(0.9);
             opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-
         #toast.show {
             visibility: visible;
+            transform: translate(-50%, 0) scale(1);
             opacity: 1;
-            bottom: 50px;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
-<body class="text-gray-800 pb-28 md:pb-12">
+<body class="font-body text-slate-800 pb-28 md:pb-16 antialiased">
 
-    <!-- Bubble Background Elements -->
-    <div class="bubble" style="left: 10%; width: 40px; height: 40px; animation-duration: 7s;"></div>
-    <div class="bubble" style="left: 30%; width: 20px; height: 20px; animation-duration: 5s; animation-delay: 2s;"></div>
-    <div class="bubble" style="left: 60%; width: 50px; height: 50px; animation-duration: 9s; animation-delay: 1s;"></div>
-    <div class="bubble" style="left: 80%; width: 30px; height: 30px; animation-duration: 6s; animation-delay: 3s;"></div>
-    <div class="bubble" style="left: 50%; width: 25px; height: 25px; animation-duration: 8s; animation-delay: 4s;"></div>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-    <!-- Main Container -->
-    <div class="max-w-5xl mx-auto px-4 pt-10 sm:pt-16">
+    <!-- Floating Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6 transition-all duration-300" id="navbar">
+        <div class="max-w-5xl mx-auto glass-panel rounded-full px-6 py-3 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-600 to-brand-300 flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+                <span class="font-heading font-extrabold text-xl tracking-tight text-slate-800">Kedai<span class="text-brand-500">Ocean</span></span>
+            </div>
+            <a href="#order-section" class="hidden md:inline-flex bg-slate-900 hover:bg-brand-600 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+                Order Sekarang
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 pt-28 sm:pt-36">
         
-        <!-- Hero Section with Poster -->
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-14">
-            <!-- Text Content -->
-            <div class="text-center md:text-left flex-1 order-2 md:order-1 reveal">
-                <h1 class="title-font text-5xl md:text-6xl font-bold tracking-wider mb-2 text-shine" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.4);">Kedai Ocean</h1>
-                <h2 class="title-font text-2xl md:text-3xl font-medium text-blue-600 tracking-widest uppercase">Price List</h2>
-                <p class="mt-4 text-blue-800 font-semibold text-lg md:text-xl">𓇼 ⋆.˚ 𓆉 𝑷𝑹𝑰𝑪𝑬 𝑳𝑰𝑺𝑻 𝑹𝑶𝑩𝑼𝑿°𓇼⋆🫧</p>
-                <div class="mt-8 hidden md:block">
-                    <a href="#order-section" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_8px_20px_rgba(37,99,235,0.4)] transition-all transform hover:-translate-y-1 inline-flex items-center gap-2">
-                        <i class="fa-solid fa-cart-shopping"></i> Pesan Sekarang
+        <!-- Hero Section -->
+        <section class="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16 mb-20 relative">
+            
+            <!-- Left: Typography -->
+            <div class="flex-1 text-center md:text-left z-10 w-full">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 border border-brand-200 text-brand-600 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-500"></span>
+                    </span>
+                    Trusted Robux Store
+                </div>
+                
+                <h1 class="font-heading text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
+                    Topup Robux <br />
+                    <span class="text-gradient">Super Cepat &</span><br />
+                    <span class="text-slate-800">Aman 100%</span>
+                </h1>
+                
+                <p class="text-slate-500 text-lg md:text-xl font-medium mb-8 max-w-lg mx-auto md:mx-0">
+                    𓇼 ⋆.˚ 𓆉 Nikmati harga termurah dengan proses instan. Temukan price list lengkap Kedai Ocean di sini! 🫧
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                    <a href="#price-list" class="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-8 rounded-full shadow-[0_8px_20px_rgba(14,165,233,0.3)] hover:shadow-[0_10px_25px_rgba(14,165,233,0.4)] transition-all transform hover:-translate-y-1 text-center">
+                        Lihat Harga
+                    </a>
+                    <a href="#order-section" class="w-full sm:w-auto bg-white hover:bg-slate-50 text-slate-800 font-bold py-4 px-8 rounded-full shadow-sm border border-slate-200 transition-all text-center">
+                        Isi Format Order
                     </a>
                 </div>
             </div>
             
-            <!-- Poster Image -->
-            <div class="flex-1 w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto relative group order-1 md:order-2 reveal" style="transition-delay: 200ms;">
-                <!-- Glowing effect di belakang poster -->
-                <div class="absolute -inset-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition duration-500 animate-pulse"></div>
-                <!-- Ganti src dengan nama file gambar poster kamu -->
-                <img src="https://i.imgur.com/5NQKzBc.jpeg" alt="Poster Kedai Ocean" class="relative rounded-3xl shadow-2xl w-full object-cover border-4 border-white/60 animate-float-img" onerror="this.src='https://placehold.co/600x600/bfdbfe/1d4ed8?text=Poster+Kedai+Ocean'">
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- Left Column: Robux Via Login -->
-            <div class="glass-card rounded-3xl p-6 md:p-8 reveal">
-                <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-gamepad text-blue-500"></i> ROBUX VIA LOGIN
-                </h3>
+            <!-- Right: Poster Frame -->
+            <div class="flex-1 w-full max-w-[320px] md:max-w-md mx-auto relative z-10 group">
+                <!-- Decorative Elements -->
+                <div class="absolute -top-6 -right-6 w-24 h-24 bg-brand-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div class="absolute -bottom-8 -left-6 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style="animation-delay: 2s;"></div>
                 
-                <div class="grid grid-cols-1 gap-3" id="login-prices">
-                    <!-- Harga di-generate via JS untuk mempermudah, tapi kita hardcode sesuai prompt -->
+                <!-- Main Image Card -->
+                <div class="glass-panel p-3 rounded-[2.5rem] transform transition duration-500 group-hover:scale-[1.02] group-hover:-rotate-1 relative z-10">
+                    <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 shadow-inner">
+                        <img src="https://i.imgur.com/5NQKzBc.jpeg" alt="Poster Kedai Ocean" class="w-full h-auto object-cover animate-float" onerror="this.src='https://placehold.co/600x800/e0f2fe/0284c7?text=Poster+Kedai+Ocean'">
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-4 left-4 right-4 glass-panel rounded-2xl p-3 flex items-center gap-3">
+                            <div class="bg-yellow-400 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white">
+                                <i class="fa-solid fa-star text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-500">Rating</p>
+                                <p class="text-sm font-black text-slate-800">100% Trusted</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Right Column: Premium & Gamepass (if any) & Notes -->
-            <div class="flex flex-col gap-8">
-                
-                <!-- Robux Premium -->
-                <div class="glass-card rounded-3xl p-6 md:p-8 reveal" style="transition-delay: 200ms;">
-                    <h3 class="title-font text-xl font-bold text-blue-900 mb-6 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-crown text-yellow-500"></i> ROBUX PREMIUM
-                    </h3>
+        <!-- Price List Section (Tabs UI) -->
+        <section id="price-list" class="mb-20 scroll-mt-32 relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="font-heading text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Pilih Paket Robux</h2>
+                <p class="text-slate-500 font-medium">Harga terbaik yang disesuaikan untuk kebutuhanmu.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex justify-center mb-10">
+                <div class="bg-white/60 backdrop-blur-md p-1.5 rounded-full border border-slate-200 shadow-sm inline-flex relative overflow-hidden">
+                    <!-- Tab Selector Background Indicator -->
+                    <div id="tab-indicator" class="absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-6px)] bg-slate-900 rounded-full transition-transform duration-300 ease-in-out shadow-md"></div>
                     
-                    <div class="grid grid-cols-1 gap-3" id="premium-prices">
-                        <!-- Harga premium di-generate via JS -->
-                    </div>
-                </div>
-
-                <!-- Notes Section -->
-                <div class="bg-blue-600/80 backdrop-blur-md rounded-3xl p-6 text-white text-sm shadow-lg border border-blue-400 reveal" style="transition-delay: 400ms;">
-                    <h4 class="font-bold mb-3 text-blue-100 flex items-center gap-2"><i class="fa-solid fa-circle-info"></i> NOTE</h4>
-                    <ul class="list-disc pl-4 space-y-2 opacity-90 leading-relaxed">
-                        <li>Robux premium hanya bisa dibeli 1x/bulan</li>
-                        <li>Benefit robux premium: 10% bonus robux saat membeli vilog reguler, serta item, boost, level, khusus premium</li>
-                        <li>Jika ada jumlah robux lain yang diinginkan tapi tidak tertera di atas bisa chat admin</li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Form Pemesanan -->
-        <div id="order-section" class="mt-12 glass-card rounded-3xl p-6 md:p-10 scroll-mt-24 relative z-10 reveal">
-            <div class="text-center mb-8">
-                <h3 class="title-font text-2xl font-bold text-blue-900">📝 FORMAT ORDER VILOG / PREMIUM</h3>
-                <p class="text-blue-700 mt-2">Isi data di bawah ini untuk mengirim format pesanan ke Telegram kami.</p>
-            </div>
-
-            <form id="orderForm" class="space-y-5 max-w-2xl mx-auto" onsubmit="event.preventDefault(); sendToTelegram();">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">ID Telegram</label>
-                        <input type="text" id="id_tele" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="@username_kamu" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Username Roblox</label>
-                        <input type="text" id="user_roblox" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Username Roblox" required>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Password Roblox</label>
-                        <input type="text" id="pass_roblox" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Password akun Roblox" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Jumlah Robux</label>
-                        <input type="text" id="jumlah_robux" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Contoh: 160R / 450R Premium" required>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold text-blue-900 mb-1 pl-2">Kirim 2 Kode Back Up</label>
-                    <input type="text" id="kode_backup" class="glass-input w-full rounded-2xl px-4 py-3 text-gray-800" placeholder="Masukkan 2 kode backup (pisahkan dengan koma)" required>
-                </div>
-
-                <div class="pt-4">
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-full px-6 py-4 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex justify-center items-center gap-3">
-                        <i class="fa-brands fa-telegram text-2xl"></i> KIRIM KE TELEGRAM @Oceeeeannnnn
+                    <button onclick="switchTab('login')" id="btn-login" class="relative z-10 px-6 sm:px-10 py-3 text-sm sm:text-base font-bold text-white transition-colors duration-300 rounded-full w-40 sm:w-48 text-center">
+                        <i class="fa-solid fa-gamepad mr-2"></i>Via Login
                     </button>
-                    <p class="text-center text-xs text-blue-800 mt-3 font-semibold">Payment: All E-Wallet, Bank, QRIS</p>
+                    <button onclick="switchTab('premium')" id="btn-premium" class="relative z-10 px-6 sm:px-10 py-3 text-sm sm:text-base font-bold text-slate-600 transition-colors duration-300 rounded-full w-40 sm:w-48 text-center">
+                        <i class="fa-solid fa-crown mr-2"></i>Premium
+                    </button>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <!-- Mobile Bottom Navigation (Gojek/Grab App Style) -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-blue-100 p-4 pb-6 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] rounded-t-3xl flex items-center justify-between transform transition-transform">
-        <div class="flex flex-col">
-            <span class="text-xs text-gray-500 font-bold mb-0.5">Siap Topup?</span>
-            <span class="text-blue-700 font-extrabold text-base leading-none">Isi Format Order</span>
+            <!-- Tab Content: Via Login -->
+            <div id="tab-login" class="tab-content active grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Tab Content: Premium -->
+            <div id="tab-premium" class="tab-content grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Note Box for Premium -->
+            <div id="premium-note" class="hidden mt-8 max-w-3xl mx-auto bg-blue-50 border border-brand-200 rounded-3xl p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <div class="bg-brand-100 p-3 rounded-2xl text-brand-600 mt-1">
+                        <i class="fa-solid fa-circle-info text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-slate-800 text-lg mb-2">Informasi Premium</h4>
+                        <ul class="list-disc pl-4 space-y-1.5 text-slate-600 text-sm font-medium">
+                            <li>Robux premium hanya bisa dibeli 1x dalam sebulan.</li>
+                            <li><strong>Benefit:</strong> 10% bonus robux saat membeli vilog reguler, serta item, boost, level khusus premium.</li>
+                            <li>Ingin nominal lain? Silakan chat admin!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section id="order-section" class="mb-10 scroll-mt-32 relative z-10">
+            <div class="glass-panel rounded-[2.5rem] p-6 md:p-12 overflow-hidden relative">
+                <!-- Background Decoration inside form -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-100 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                
+                <div class="text-center mb-10 relative z-10">
+                    <h2 class="font-heading text-3xl md:text-4xl font-extrabold text-slate-800 mb-3">Isi Format Order</h2>
+                    <p class="text-slate-500 font-medium">Lengkapi data di bawah ini, pesanan akan langsung diteruskan ke Admin Telegram kami.</p>
+                </div>
+
+                <form id="orderForm" class="space-y-6 max-w-3xl mx-auto relative z-10" onsubmit="event.preventDefault(); sendToTelegram();">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- ID Telegram -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-700 ml-1">ID / Username Telegram <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-brands fa-telegram"></i>
+                                </div>
+                                <input type="text" id="id_tele" class="modern-input w-full rounded-2xl pl-11 pr-4 py-3.5 text-slate-800 font-medium placeholder-slate-400" placeholder="@username_kamu" required>
+                            </div>
+                        </div>
+
+                        <!-- Username Roblox -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-700 ml-1">Username Roblox <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <input type="text" id="user_roblox" class="modern-input w-full rounded-2xl pl-11 pr-4 py-3.5 text-slate-800 font-medium placeholder-slate-400" placeholder="Ketik username roblox" required>
+                            </div>
+                        </div>
+
+                        <!-- Password Roblox -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-700 ml-1">Password Roblox <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <input type="password" id="pass_roblox" class="modern-input w-full rounded-2xl pl-11 pr-4 py-3.5 text-slate-800 font-medium placeholder-slate-400" placeholder="Ketik password roblox" required>
+                                <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-500">
+                                    <i class="fa-solid fa-eye" id="eye-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Jumlah Robux -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-700 ml-1">Jumlah Robux <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-yellow-500">
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <input type="text" id="jumlah_robux" class="modern-input w-full rounded-2xl pl-11 pr-4 py-3.5 text-slate-800 font-medium placeholder-slate-400" placeholder="Contoh: 160R / 450R Premium" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kode Backup -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-700 ml-1">Kirim 2 Kode Back Up <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <input type="text" id="kode_backup" class="modern-input w-full rounded-2xl pl-11 pr-4 py-3.5 text-slate-800 font-medium placeholder-slate-400" placeholder="Masukkan 2 kode backup (pisahkan dengan koma)" required>
+                        </div>
+                        <p class="text-xs text-slate-500 ml-1 mt-1"><i class="fa-solid fa-circle-exclamation mr-1"></i> Pastikan kode backup valid agar proses cepat.</p>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-heading font-bold text-lg rounded-2xl px-6 py-4 transition-all duration-300 shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_10px_25px_rgba(2,132,199,0.3)] flex justify-center items-center gap-3 group relative overflow-hidden">
+                            <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shine_1.5s_ease-in-out_infinite]"></div>
+                            <i class="fa-brands fa-telegram text-2xl group-hover:scale-110 transition-transform"></i> 
+                            Kirim Pesanan Sekarang
+                        </button>
+                        
+                        <!-- Payment Methods Display -->
+                        <div class="mt-6 pt-6 border-t border-slate-200/60 flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Menerima Pembayaran</span>
+                            <div class="flex items-center gap-4 text-slate-600 text-sm font-bold">
+                                <span class="bg-white px-3 py-1.5 rounded-lg shadow-sm border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-wallet text-brand-500"></i> E-Wallet</span>
+                                <span class="bg-white px-3 py-1.5 rounded-lg shadow-sm border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-building-columns text-brand-500"></i> Bank</span>
+                                <span class="bg-white px-3 py-1.5 rounded-lg shadow-sm border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-qrcode text-brand-500"></i> QRIS</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Mobile Bottom Action Button (iOS/Modern Android Style) -->
+    <div class="md:hidden fixed bottom-6 left-0 right-0 px-4 z-50 pointer-events-none">
+        <div class="bg-slate-900/90 backdrop-blur-xl p-2 rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] flex items-center justify-between border border-white/10 pointer-events-auto max-w-sm mx-auto">
+            <div class="flex items-center pl-4 gap-3">
+                <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-white">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Mulai Transaksi</span>
+                    <span class="text-white font-heading font-bold text-sm leading-none mt-0.5">Order Robux</span>
+                </div>
+            </div>
+            <a href="#order-section" class="bg-white text-slate-900 font-bold py-3 px-6 rounded-full shadow-sm active:scale-95 transition-all text-sm h-full flex items-center">
+                Pesan <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
         </div>
-        <a href="#order-section" class="bg-blue-600 text-white font-bold py-3 px-7 rounded-2xl shadow-[0_4px_12px_rgba(37,99,235,0.4)] active:scale-95 active:bg-blue-700 transition-all flex items-center gap-2">
-            Pesan <i class="fa-solid fa-arrow-down"></i>
-        </a>
     </div>
 
     <!-- Custom Toast Message -->
-    <div id="toast">Harap isi semua kolom pesanan!</div>
+    <div id="toast" class="fixed top-10 left-1/2 z-[100] bg-red-500 text-white px-6 py-3 rounded-full shadow-xl font-bold flex items-center gap-3">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="toast-msg">Pesan error</span>
+    </div>
 
     <script>
-        // SVG Icon Robux
-        const robuxIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block">
-            <path d="M12 2L22.3923 8V20L12 22L1.6077 16V4L12 2Z" fill="#FDE047" stroke="#CA8A04" stroke-width="2"/>
-            <rect x="9" y="8" width="6" height="6" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1"/>
-        </svg>`;
-
-        // Data Harga
+        // Data Harga (Bisa dimodifikasi kapan saja)
         const pricesLogin = [
-            { amount: "80R", price: "16K" },
-            { amount: "160R", price: "32K" },
-            { amount: "240R", price: "48K" },
-            { amount: "320R", price: "62K" },
-            { amount: "500R", price: "75K" },
-            { amount: "1000R", price: "148K" },
-            { amount: "1500R", price: "220K" },
-            { amount: "2000R", price: "295K" },
-            { amount: "2500R", price: "360K" },
-            { amount: "3000R", price: "440K" },
-            { amount: "4000R", price: "580K" },
-            { amount: "5000R", price: "720K" }
+            { amount: "80 R$", price: "Rp 16.000" },
+            { amount: "160 R$", price: "Rp 32.000" },
+            { amount: "240 R$", price: "Rp 48.000" },
+            { amount: "320 R$", price: "Rp 62.000" },
+            { amount: "500 R$", price: "Rp 75.000" },
+            { amount: "1000 R$", price: "Rp 148.000" },
+            { amount: "1500 R$", price: "Rp 220.000" },
+            { amount: "2000 R$", price: "Rp 295.000" },
+            { amount: "2500 R$", price: "Rp 360.000" },
+            { amount: "3000 R$", price: "Rp 440.000" },
+            { amount: "4000 R$", price: "Rp 580.000" },
+            { amount: "5000 R$", price: "Rp 720.000" }
         ];
 
         const pricesPremium = [
-            { amount: "450R + Premium", price: "75K" },
-            { amount: "1000R + Premium", price: "150K" },
-            { amount: "2000R + Premium", price: "300K" }
+            { amount: "450 R$ + Premium", price: "Rp 75.000" },
+            { amount: "1000 R$ + Premium", price: "Rp 150.000" },
+            { amount: "2000 R$ + Premium", price: "Rp 300.000" }
         ];
 
-        // Fungsi Render Harga
-        function renderPrices(data, containerId) {
+        // SVG Robux Icon Keren
+        const robuxSVG = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-sm">
+            <path d="M12 2L22.3923 8V20L12 22L1.6077 16V4L12 2Z" fill="#FACC15" stroke="#CA8A04" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 4.5L19.5 8.5V18.5L12 19.5L4.5 18.5V8.5L12 4.5Z" fill="#FDE047"/>
+            <rect x="9" y="9" width="6" height="6" fill="#FEF08A" stroke="#CA8A04" stroke-width="1" transform="rotate(45 12 12)"/>
+        </svg>`;
+
+        // Fungsi Render Card Harga
+        function renderCards(data, containerId) {
             const container = document.getElementById(containerId);
+            container.innerHTML = ''; // bersihkan dulu
+            
             data.forEach(item => {
-                const pill = document.createElement('div');
-                pill.className = 'price-pill rounded-full px-5 py-3 flex justify-between items-center cursor-default';
-                pill.innerHTML = `
-                    <div class="flex items-center gap-3 font-bold text-[15px] tracking-wide">
-                        ${robuxIcon}
-                        <span>${item.amount}</span>
+                const card = document.createElement('div');
+                card.className = 'product-card rounded-3xl p-5 flex items-center justify-between cursor-pointer group relative overflow-hidden';
+                // Fungsi otomatis isi form saat diklik
+                card.onclick = () => {
+                    document.getElementById('jumlah_robux').value = item.amount;
+                    document.getElementById('jumlah_robux').focus();
+                    window.location.hash = '#order-section';
+                };
+                
+                card.innerHTML = `
+                    <div class="absolute -right-6 -top-6 w-20 h-20 bg-brand-100 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform duration-300">
+                            ${robuxSVG}
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Nominal</span>
+                            <span class="font-heading font-black text-slate-800 text-lg leading-none">${item.amount}</span>
+                        </div>
                     </div>
-                    <div class="font-extrabold text-white text-[15px] bg-blue-800/40 px-3 py-1 rounded-full border border-blue-400/30">
-                        ${item.price}
+                    <div class="relative z-10">
+                        <div class="bg-brand-50 text-brand-600 border border-brand-200 px-4 py-2 rounded-xl font-bold text-sm group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-500 transition-colors shadow-sm">
+                            ${item.price}
+                        </div>
                     </div>
                 `;
-                container.appendChild(pill);
+                container.appendChild(card);
             });
         }
 
-        renderPrices(pricesLogin, 'login-prices');
-        renderPrices(pricesPremium, 'premium-prices');
+        renderCards(pricesLogin, 'tab-login');
+        renderCards(pricesPremium, 'tab-premium');
 
-        // Fungsi Show Toast
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        // Logic Tab / Toggle Menu
+        function switchTab(tabName) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabPremium = document.getElementById('tab-premium');
+            const btnLogin = document.getElementById('btn-login');
+            const btnPremium = document.getElementById('btn-premium');
+            const indicator = document.getElementById('tab-indicator');
+            const premiumNote = document.getElementById('premium-note');
+
+            if (tabName === 'login') {
+                tabLogin.classList.add('active');
+                tabPremium.classList.remove('active');
+                
+                btnLogin.classList.replace('text-slate-600', 'text-white');
+                btnPremium.classList.replace('text-white', 'text-slate-600');
+                
+                indicator.style.transform = 'translateX(0)';
+                premiumNote.classList.add('hidden');
+            } else {
+                tabLogin.classList.remove('active');
+                tabPremium.classList.add('active');
+                
+                btnPremium.classList.replace('text-slate-600', 'text-white');
+                btnLogin.classList.replace('text-white', 'text-slate-600');
+                
+                // Pindah posisi background hitam
+                indicator.style.transform = 'translateX(100%)';
+                premiumNote.classList.remove('hidden');
+            }
         }
 
-        // Fungsi Kirim ke Telegram
+        // Fitur Tampilkan/Sembunyikan Password
+        function togglePassword() {
+            const passInput = document.getElementById('pass_roblox');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passInput.type = "password";
+                eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+
+        // Logic Notifikasi Toast
+        function showToast(message, isError = true) {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            
+            toastMsg.textContent = message;
+            
+            if(!isError) {
+                toast.classList.replace('bg-red-500', 'bg-emerald-500');
+                toast.querySelector('i').classList.replace('fa-circle-exclamation', 'fa-circle-check');
+            } else {
+                toast.classList.replace('bg-emerald-500', 'bg-red-500');
+                toast.querySelector('i').classList.replace('fa-circle-check', 'fa-circle-exclamation');
+            }
+
+            toast.classList.add("show");
+            setTimeout(() => { toast.classList.remove("show"); }, 3500);
+        }
+
+        // Logic Kirim Form ke Telegram
         function sendToTelegram() {
             const idTele = document.getElementById('id_tele').value.trim();
             const userRoblox = document.getElementById('user_roblox').value.trim();
@@ -370,39 +554,38 @@
             const kodeBackup = document.getElementById('kode_backup').value.trim();
 
             if (!idTele || !userRoblox || !passRoblox || !jumlahRobux || !kodeBackup) {
-                showToast("Harap isi semua data pada format!");
+                showToast("Harap isi semua kolom pesanan yang wajib (*)", true);
                 return;
             }
 
-            const formatText = `FORMAT VILOG/PREMIUM\n\nId Telegram: ${idTele}\nUsername Roblox: ${userRoblox}\nPassword Roblox: ${passRoblox}\nJumlah Robux: ${jumlahRobux}\nKirim 2 Kode Back Up: ${kodeBackup}`;
+            // Animasi tombol (opsional)
+            showToast("Membuka Telegram...", false);
 
-            // URL Encode text
+            const formatText = `*FORMAT ORDER KEDAI OCEAN*\n\n` +
+                               `🔹 *ID Telegram*: ${idTele}\n` +
+                               `👤 *User Roblox*: ${userRoblox}\n` +
+                               `🔒 *Pass Roblox*: ${passRoblox}\n` +
+                               `💰 *Jml Robux*: ${jumlahRobux}\n` +
+                               `🛡️ *Kode Backup*: ${kodeBackup}\n\n` +
+                               `_Mohon segera diproses admin, terima kasih!_`;
+
             const encodedText = encodeURIComponent(formatText);
-            
-            // Buka link Telegram
             const telegramURL = `https://t.me/Oceeeeannnnn?text=${encodedText}`;
-            window.open(telegramURL, '_blank');
+            
+            setTimeout(() => {
+                window.open(telegramURL, '_blank');
+            }, 800); // delay dikit biar animasi jalan
         }
 
-        // --- SCRIPT ANIMASI REVEAL SAAT SCROLL ---
-        function revealOnScroll() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 50; // Jarak dari bawah layar agar animasi mulai
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
+        // Efek blur pada navbar saat di-scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('backdrop-blur-lg', 'bg-white/30');
+            } else {
+                nav.classList.remove('backdrop-blur-lg', 'bg-white/30');
             }
-        }
-
-        // Tambahkan event listener scroll
-        window.addEventListener("scroll", revealOnScroll);
-        
-        // Panggil fungsi sekali saat website baru direload
-        setTimeout(revealOnScroll, 100);
+        });
     </script>
 </body>
 </html>
